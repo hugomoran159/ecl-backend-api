@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from graphene_django.views import GraphQLView
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 
 
 
@@ -25,4 +25,3 @@ urlpatterns = [
     path("graphql", GraphQLView.as_view(graphiql=True)),
 ]
 
-urlpatterns += staticfiles_urlpatterns()

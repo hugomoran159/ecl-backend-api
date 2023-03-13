@@ -27,3 +27,15 @@ class Data(models.Model):
 
     def __str__(self):
         return self.name
+    
+class CityGeojson(models.Model):
+    geojson = models.JSONField()
+    
+    def __str__(self):
+        return self.city.name
+    
+class CountryGeojson(models.Model):
+    geojson = models.JSONField()
+    
+    def __str__(self):
+        return self.country.name

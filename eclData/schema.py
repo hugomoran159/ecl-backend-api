@@ -3,7 +3,10 @@ from graphene_django import DjangoObjectType
 from eclData.models import City as CityModel
 from eclData.models import Data as DataModel
 from eclData.models import Country as CountryModel
+from eclData.models import CityGeojson as CityGeojsonModel
+from eclData.models import CountryGeojson as CountryGeojsonModel
 from graphene import Node
+
 
 
 class Connection(graphene.Connection):
@@ -38,14 +41,14 @@ class City(DjangoObjectType):
         interfaces = (Node,)
         filter_fields = ("name",)
         connection_class = Connection
+        
+class CityGeojson(DjangoObjectType):
+    class Meta:
+        model = CityGeojsonModel
 
-    """
-
-    
-    @classmethod
-    def get_node(cls, info, id):
-        return City.objects.get(id=id)
-    """
+class CountryGeojson(DjangoObjectType):
+    class Meta:
+        model = CountryGeojsonModel
 
 
 class Query(graphene.ObjectType):
@@ -55,6 +58,8 @@ class Query(graphene.ObjectType):
     data_by_name = graphene.Field(Data, name=graphene.String(required=True))
     country = graphene.List(Country)
     country_by_name = graphene.Field(Country, name=graphene.String(required=True))
+    country_geojson = graphene.List(CountryGeojson)
+    city_geojson = graphene.List(CityGeojson)
 
     def resolve_cities(self, info):
         return CityModel.objects.all()
@@ -73,6 +78,12 @@ class Query(graphene.ObjectType):
 
     def resolve_country_by_name(self, info, name):
         return CountryModel.objects.get(name=name)
+    
+    def resolve_country_geojson(self, info):
+        return CountryGeojsonModel.objects.all()
+
+    def resolve_city_geojson(self, info):
+        return CityGeojsonModel.objects.all()
 
 
 schema = graphene.Schema(query=Query)

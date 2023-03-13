@@ -41,14 +41,13 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    #added
-    "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
     
     # Libraries
     "graphene_django",
     "django_filters",
     "django_heroku",
+    "rest-framework",
     
     # Apps
     "eclData",
@@ -100,11 +99,6 @@ DATABASES = {
     ),
 }
 
-STORAGES = {
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
 
 
 # Password validation
