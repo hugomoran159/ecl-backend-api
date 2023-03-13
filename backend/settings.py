@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     "graphene_django",
     "django_filters",
     "django_heroku",
-    "django_graphql_geojson"
     
     # Apps
     "eclData",
