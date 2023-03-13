@@ -13,7 +13,7 @@ class Command(BaseCommand):
         http = httplib2.Http()
 
         colnames = ["city", "country", "latitude", "longitude"]
-        city_df = pd.read_csv("staticfiles/cities.csv", names=colnames, header=None)
+        city_df = pd.read_csv("static/cities.csv", names=colnames, header=None)
         city_df = city_df.drop(city_df.index[0])
 
         df_headers = {
