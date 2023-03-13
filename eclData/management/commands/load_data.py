@@ -155,9 +155,16 @@ class Command(BaseCommand):
             city_data = pd.DataFrame([city_data])
             df = pd.concat([df, city_data], axis=0, ignore_index=True)
             city_data = {}
+            
+        
 
         City.objects.all().delete()
         Data.objects.all().delete()
+        
+        
+        
+        
+        
 
         # loop through each row in the DataFrame
         for index, row in df.iterrows():
