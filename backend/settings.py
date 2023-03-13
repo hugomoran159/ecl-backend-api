@@ -38,7 +38,7 @@ CSRF_TRUSTED_ORIGINS = ['https://erasmus-cost-of-living.herokuapp.com','https://
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
-    "django.contrib.contenttypes",s̄
+    "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
