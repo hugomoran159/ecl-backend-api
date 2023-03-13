@@ -14,7 +14,7 @@ class Command(BaseCommand):
         http = httplib2.Http()
 
         colnames = ["city", "country", "latitude", "longitude"]
-        city_df = pd.read_csv("staticfiles/cities.csv", names=colnames, header=None)
+        city_df = pd.read_csv("static/cities.csv", names=colnames, header=None)
         city_df = city_df.drop(city_df.index[0])
 
         df_headers = {
@@ -163,12 +163,12 @@ class Command(BaseCommand):
         Data.objects.all().delete()
         
         if(CityGeojson.objects.all().count() == 0):
-            cityGeojson = json.loads("staticfiles/citydata.geojson")
+            cityGeojson = json.loads("static/citydata.geojson")
             CityGeojson.objects.create(geojson=cityGeojson)
             
             
         if(CountryGeojson.objects.all().count() == 0):
-            countryGeojson = json.loads("staticfiles/country-mod.geojson")
+            countryGeojson = json.loads("static/country-mod.geojson")
             CountryGeojson.objects.create(geojson=countryGeojson)
         
         
