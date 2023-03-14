@@ -32,10 +32,10 @@ class CityGeojson(models.Model):
     geojson = models.JSONField()
     
     def __str__(self):
-        return self.city.name
+        return self.__str__()
     
 class CountryGeojson(models.Model):
     geojson = models.JSONField()
     
     def __str__(self):
-        return self.country.name
+        return self.__str__()
