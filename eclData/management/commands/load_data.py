@@ -1,10 +1,10 @@
-from eclData.models import City, Data, Country, CityGeojson, CountryGeojson
+from eclData.models import City, Data, Country
 from django.core.management.base import BaseCommand, CommandError
 import pandas as pd
 from bs4 import BeautifulSoup
 import httplib2
 import re
-import json
+
 
 
 class Command(BaseCommand):
@@ -161,15 +161,6 @@ class Command(BaseCommand):
 
         City.objects.all().delete()
         Data.objects.all().delete()
-        
-        if(CityGeojson.objects.all().count() == 0):
-            cityGeojson = json.loads("static/citydata.geojson")
-            CityGeojson.objects.create(geojson=cityGeojson)
-            
-            
-        if(CountryGeojson.objects.all().count() == 0):
-            countryGeojson = json.loads("static/country-mod.geojson")
-            CountryGeojson.objects.create(geojson=countryGeojson)
         
         
         
