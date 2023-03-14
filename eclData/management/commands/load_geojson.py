@@ -4,11 +4,12 @@ from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
-    cityGeojson = json.loads("static/citydata.geojson")
+    with open("static/citydata.geojson") as f:
+        cityGeojson = json.loads(f)
     CityGeojson.objects.create(geojson=cityGeojson)
                 
-                
-    countryGeojson = json.loads("static/country-mod.geojson")
+    with open("static/country-mod.geojson") as f:
+        countryGeojson = json.loads(f)
     CountryGeojson.objects.create(geojson=countryGeojson)
         
         
