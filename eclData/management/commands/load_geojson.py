@@ -1,5 +1,5 @@
 import json
-from eclData.models import CityGeojson as CountryGeojson
+from eclData.models import CityGeojson, CountryGeojson
 from django.core.management.base import BaseCommand
 
 
