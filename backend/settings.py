@@ -26,13 +26,43 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['erasmus-cost-of-living.herokuapp.com']
+ALLOWED_HOSTS = ['erasmus-cost-of-living.herokuapp.com', 'https://*.127.0.0.1']
 
-CSRF_TRUSTED_ORIGINS = ['https://erasmus-cost-of-living.herokuapp.com','https://*.127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://erasmus-cost-of-living.herokuapp.com','https://*.127.0.0.1', 'http://localhost:3000']
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ORIGIN_WHITELIST = ["http://localhost:3000", ]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8080",
+    "http://localhost:3000",
+]
+
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -47,6 +77,7 @@ INSTALLED_APPS = [
     "graphene_django",
     "django_filters",
     "django_heroku",
+    "corsheaders",
     
     # Apps
     "eclData",
@@ -57,6 +88,7 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     #added
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -95,8 +127,7 @@ DATABASES = {
     'default': dj_database_url.config(
         conn_max_age=600,
         conn_health_checks=True,
-    )
-    
+    )  
 }
 
 '''
@@ -104,6 +135,15 @@ DATABASES = {
         'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        
+        'default': {
+       'ENGINE': 'django.db.backends.postgresql',
+       'NAME': 'usersdb',
+       'USER': 'newUser',
+       'PASSWORD': 'password',
+       'HOST': '127.0.0.1',
+       'PORT': '5432',
+   }
     },
         
     ),'''
