@@ -30,6 +30,9 @@ class Data(models.Model):
         return self.name
     
 class CityGeojson(models.Model):
+    @property
+    def pk(self):
+        return self.id  # your pk
     geojson = models.JSONField()
     
     def __str__(self):
