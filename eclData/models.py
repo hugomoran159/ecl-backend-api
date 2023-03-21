@@ -30,16 +30,13 @@ class Data(models.Model):
         return self.name
     
 class CityGeojson(models.Model):
-    @property
-    def pk(self):
-        return self.id  # your pk
-    geojson = models.JSONField()
+    geojson = models.TextField()
     
     def __str__(self):
         return self.__str__()
     
 class CountryGeojson(models.Model):
-    geojson = models.JSONField()
+    geojson = models.TextField()
     
     def __str__(self):
         return self.__str__()

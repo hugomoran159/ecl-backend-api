@@ -9,38 +9,24 @@ from graphene import Node
 
 
 
-class Connection(graphene.Connection):
-    class Meta:
-        abstract = True
 
-    total_count = graphene.Int()
-
-    def resolve_total_count(self, info):
-        return self.length
 
 
 class Country(DjangoObjectType):
     class Meta:
         model = CountryModel
-        interfaces = (Node,)
-        filter_fields = ("name",)
-        connection_class = Connection
+
 
 
 class Data(DjangoObjectType):
     class Meta:
         model = DataModel
-        interfaces = (Node,)
-        filter_fields = ("name",)
-        connection_class = Connection
 
 
 class City(DjangoObjectType):
     class Meta:
         model = CityModel
-        interfaces = (Node,)
-        filter_fields = ("name",)
-        connection_class = Connection
+
         
 class CityGeojson(DjangoObjectType):
     class Meta:
@@ -52,12 +38,9 @@ class CountryGeojson(DjangoObjectType):
 
 
 class Query(graphene.ObjectType):
-    city_by_name = graphene.Field(City, name=graphene.String(required=True))
     cities = graphene.List(City)
     data = graphene.List(Data)
-    data_by_name = graphene.Field(Data, name=graphene.String(required=True))
     country = graphene.List(Country)
-    country_by_name = graphene.Field(Country, name=graphene.String(required=True))
     country_geojson = graphene.List(CountryGeojson)
     city_geojson = graphene.List(CityGeojson)
 
@@ -67,17 +50,8 @@ class Query(graphene.ObjectType):
     def resolve_data(self, info):
         return DataModel.objects.all()
 
-    def resolve_city_by_name(self, info, name):
-        return CityModel.objects.get(name=name)
-
-    def resolve_data_by_name(self, info, name):
-        return DataModel.objects.filter(city=self, name=name)
-
     def resolve_country(self, info):
         return CountryModel.objects.all()
-
-    def resolve_country_by_name(self, info, name):
-        return CountryModel.objects.get(name=name)
     
     def resolve_country_geojson(self, info):
         return CountryGeojsonModel.objects.all()

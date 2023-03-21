@@ -26,20 +26,25 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['erasmus-cost-of-living.herokuapp.com', 'https://*.127.0.0.1']
+ALLOWED_HOSTS = ['https://eclbackend.herokuapp.com/', 'https://*.127.0.0.1']
 
-CSRF_TRUSTED_ORIGINS = ['https://erasmus-cost-of-living.herokuapp.com','https://*.127.0.0.1', 'http://localhost:3000']
+CSRF_TRUSTED_ORIGINS = ['https://eclbackend.herokuapp.com/','https://*.127.0.0.1', 'http://localhost:3000', 'https://soft-seahorse-eaa088.netlify.app/', 'https://erasmuscostofliving.com']
 
 CORS_ALLOW_CREDENTIALS = True
 
-CORS_ORIGIN_WHITELIST = ["http://localhost:3000", ]
+CORS_ORIGIN_WHITELIST = ["http://localhost:3000", "https://soft-seahorse-eaa088.netlify.app/", 'https://erasmuscostofliving.com']
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
     "http://localhost:3000",
+    'https://eclbackend.herokuapp.com/'
+    "https://soft-seahorse-eaa088.netlify.app/"
+    'https://erasmuscostofliving.com'
 ]
 
 CORS_ALLOW_METHODS = [
@@ -128,13 +133,12 @@ DATABASES = {
         conn_max_age=600,
         conn_health_checks=True,
     )  
+    
 }
 
 '''
     
-        'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        
         
         'default': {
        'ENGINE': 'django.db.backends.postgresql',
@@ -145,6 +149,14 @@ DATABASES = {
        'PORT': '5432',
    }
     },
+    
+    
+    
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    
+}
         
     ),'''
 
