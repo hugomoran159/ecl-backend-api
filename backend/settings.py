@@ -42,8 +42,8 @@ CORS_ORIGIN_WHITELIST = ["http://localhost:3000", "https://soft-seahorse-eaa088.
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
     "http://localhost:3000",
-    'https://eclbackend.herokuapp.com/',
-    "https://soft-seahorse-eaa088.netlify.app/",
+    'https://eclbackend.herokuapp.com',
+    "https://soft-seahorse-eaa088.netlify.app",
     'https://erasmuscostofliving.com',
     "https://main--soft-seahorse-eaa088.netlify.app",
 ]
