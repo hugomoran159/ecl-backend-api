@@ -33,11 +33,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['https://eclbackend.herokuapp.com/', 'https://*.127.0.0.1']
 
-CSRF_TRUSTED_ORIGINS = ['https://eclbackend.herokuapp.com/','https://*.127.0.0.1', 'http://localhost:3000', 'https://soft-seahorse-eaa088.netlify.app/', 'https://erasmuscostofliving.com', "https://main--soft-seahorse-eaa088.netlify.app/"]
+CSRF_TRUSTED_ORIGINS = ['https://eclbackend.herokuapp.com/','https://*.127.0.0.1', 'http://localhost:3000', 'https://soft-seahorse-eaa088.netlify.app/', 'https://erasmuscostofliving.com', "https://main--soft-seahorse-eaa088.netlify.app"]
 
 CORS_ALLOW_CREDENTIALS = True
 
-CORS_ORIGIN_WHITELIST = ["http://localhost:3000", "https://soft-seahorse-eaa088.netlify.app/", 'https://erasmuscostofliving.com', "https://main--soft-seahorse-eaa088.netlify.app/"]
+CORS_ORIGIN_WHITELIST = ["http://localhost:3000", "https://soft-seahorse-eaa088.netlify.app/", 'https://erasmuscostofliving.com', "https://main--soft-seahorse-eaa088.netlify.app"]
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
@@ -45,7 +45,7 @@ CORS_ALLOWED_ORIGINS = [
     'https://eclbackend.herokuapp.com/',
     "https://soft-seahorse-eaa088.netlify.app/",
     'https://erasmuscostofliving.com',
-    "https://main-soft-seahorse-eaa088.netlify.app/",
+    "https://main--soft-seahorse-eaa088.netlify.app",
 ]
 
 CORS_ALLOW_METHODS = [
