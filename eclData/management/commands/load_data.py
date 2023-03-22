@@ -160,6 +160,8 @@ class Command(BaseCommand):
             df = pd.concat([df, city_data], axis=0, ignore_index=True)
             city_data = {}
             
+        unique_df = df['city'].str.strip().drop_duplicates()
+            
         
 
         City.objects.all().delete()
@@ -174,7 +176,7 @@ class Command(BaseCommand):
         
 
         # loop through each row in the DataFrame
-        for index, row in df.iterrows():
+        for index, row in unique_df.iterrows():
             # create or update the Country model
             country, created = Country.objects.get_or_create(name=row["country"])
 
