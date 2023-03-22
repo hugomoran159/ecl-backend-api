@@ -161,6 +161,8 @@ class Command(BaseCommand):
             city_data = {}
             
         unique_df = df.assign(name=df['city'].str.strip()).drop_duplicates(subset=['city'])
+        print(unique_df.columns)
+        unique_df.drop(columns=['name'], inplace=True)
             
         
 
