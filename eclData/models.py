@@ -14,6 +14,8 @@ class City(models.Model):
     longitude = models.CharField(max_length=200)
     latitude = models.CharField(max_length=200)
     country = models.ForeignKey(Country, related_name="citylocation", on_delete=models.CASCADE)
+    group = models.CharField(max_length=50)
+    propername = models.CharField(max_length=200)
 
     def __str__(self):
         return self.name

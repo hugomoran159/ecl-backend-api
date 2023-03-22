@@ -13,9 +13,10 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         http = httplib2.Http()
 
-        colnames = ["city", "country", "latitude", "longitude"]
+        colnames = ["city", "country", "latitude", "longitude", "group", "cityproper"]
         city_df = pd.read_csv("static/cities.csv", names=colnames, header=None)
         city_df = city_df.drop(city_df.index[0])
+        print(city_df.head())
 
         df_headers = {
             "currency": [],
@@ -62,6 +63,8 @@ class Command(BaseCommand):
             city_data["country"] = props["country"]
             city_data["latitude"] = props["latitude"]
             city_data["longitude"] = props["longitude"]
+            city_data["group"] = props["group"]
+            city_data["cityproper"] = props["cityproper"]
 
             get_meal_price(all_tds)
             get_market_prices(all_tds)
@@ -181,6 +184,8 @@ class Command(BaseCommand):
                 defaults={
                     "longitude": row["longitude"],
                     "latitude": row["latitude"],
+                    "group": row["group"],
+                    "propername": row["cityproper"],
                     "country": country,
                 },
             )
@@ -188,14 +193,16 @@ class Command(BaseCommand):
             # loop through each column in the row
             for col in df.columns:
                 # check if the column is a data column
-                if col not in ["currency", "city", "country", "longitude", "latitude"]:
+                if col not in ["currency", "city", "country", "longitude", "latitude", "group", "cityproper"]:
                     # create the Data model
+                    print(row)
                     Data.objects.create(
                         name=col,
                         description=row[col][0],
                         value=row[col][1],
                         currency=row["currency"],
                         city=city,
+                        
                     )
 
                     """
