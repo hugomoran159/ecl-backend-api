@@ -12,11 +12,11 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         http = httplib2.Http()
+        print('Loading data...')
 
         colnames = ["city", "country", "latitude", "longitude", "group", "cityproper"]
         city_df = pd.read_csv("static/cities.csv", names=colnames, header=None)
         city_df = city_df.drop(city_df.index[0])
-        print(city_df.head())
 
         df_headers = {
             "currency": [],
@@ -160,7 +160,7 @@ class Command(BaseCommand):
             df = pd.concat([df, city_data], axis=0, ignore_index=True)
             city_data = {}
             
-        unique_df = df['city'].str.strip().drop_duplicates()
+        unique_df = df.assign(name=df['city'].str.strip()).drop_duplicates(subset=['city'])
             
         
 
@@ -193,11 +193,10 @@ class Command(BaseCommand):
             )
 
             # loop through each column in the row
-            for col in df.columns:
+            for col in unique_df.columns:
                 # check if the column is a data column
                 if col not in ["currency", "city", "country", "longitude", "latitude", "group", "cityproper"]:
                     # create the Data model
-                    print(row)
                     Data.objects.create(
                         name=col,
                         description=row[col][0],
