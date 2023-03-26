@@ -287,7 +287,7 @@ class Command(BaseCommand):
                     "latitude": row["latitude"],
                     "group": row["group"],
                     "propername": row["cityproper"],
-                    "rank": row["rank"],
+                    "ranking": row["rank"],
                     "country": country,
                 },
             )
