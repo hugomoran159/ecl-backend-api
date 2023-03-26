@@ -70,6 +70,26 @@ class Command(BaseCommand):
             get_market_prices(all_tds)
             get_transport_prices(all_tds)
             get_rent_prices(all_tds)
+            
+        def get_city_index(city_data):
+            
+            url = (
+                "https://www.numbeo.com/cost-of-living/rankings_current.jsp"
+            )
+            
+            status, response = http.request(url)
+            soup = BeautifulSoup(response, "html.parser")
+            """test_soup = soup.find_all(attrs={"id": 'displayCurrency'})"""
+            all_tds = soup.find_all("td")
+            
+            for ind, td in enumerate(all_tds):
+                if("" + city_data["cityproper"].strip() + ", " + city_data["country"].strip() in td.text):
+                    city_data["costofLivingIndex"] = all_tds[ind+1].text
+                    city_data["rentIndex"] = all_tds[ind+2].text
+                    city_data["CostOfLivingPlusRentIndex"] = all_tds[ind+3].text
+                    break
+
+
 
         def get_meal_price(tds):
             domestic_beer = False
@@ -161,8 +181,85 @@ class Command(BaseCommand):
             city_data = {}
             
         unique_df = df.assign(name=df['city'].str.strip()).drop_duplicates(subset=['city'])
-        print(unique_df.columns)
         unique_df.drop(columns=['name'], inplace=True)
+        
+       
+        
+        
+        
+        def rank_costs(col):
+            
+            df = pd.DataFrame()
+            
+            
+            
+            df['description_column'] = col.apply(lambda x: x[0])
+            
+            df['value_column'] = col.apply(lambda x: x[1])
+            
+            df['value_column'] = df['value_column'].astype(float)
+            
+            print(df["value_column"])
+
+            # create a new column with the ranks of the values in the "new_column" using the 'max' method
+            df['rank_column'] = df['value_column'].rank(method='dense', ascending=False)
+            
+            df['rank_column'] = df['rank_column'].astype(int)
+            
+            print(df["rank_column"])
+            
+
+            
+            df['combined_column'] = df.apply(lambda row: [row['description_column'], row['value_column'], row['rank_column']], axis=1)
+            
+            
+            return df['combined_column']
+        
+        def get_city_rank(df):
+            mealval = df['meal'].apply(lambda x: x[2]).astype(int)
+            mcmealval = df['mcmeal'].apply(lambda x: x[2]).astype(int)
+            beerval = df['beer restaurant'].apply(lambda x: x[2]).astype(int)
+            coffeval = df['coffee'].apply(lambda x: x[2]).astype(int)
+            milkval = df['milk'].apply(lambda x: x[2]).astype(int)
+            riceval = df['rice'].apply(lambda x: x[2]).astype(int)
+            potatoval = df['potato'].apply(lambda x: x[2]).astype(int)
+            waterval = df['water'].apply(lambda x: x[2]).astype(int)
+            cigarettesval = df['cigarettes'].apply(lambda x: x[2]).astype(int)
+            ticketval = df['ticket'].apply(lambda x: x[2]).astype(int)
+            rentval = df['rent'].apply(lambda x: x[2]).astype(int)
+            
+            unique_df['rank'] = mealval + mcmealval + beerval + coffeval + ((milkval + riceval + potatoval)/3) + waterval + cigarettesval + ticketval + rentval
+            
+            unique_df['rank'] = unique_df['rank'].rank(method='dense', ascending=True)
+            
+            print(unique_df['rank'])
+            
+            
+            return df
+            
+            
+            
+            
+        
+        
+        
+        
+        
+        unique_df['meal'] = rank_costs(unique_df['meal'])
+        unique_df['mcmeal'] = rank_costs(unique_df['mcmeal'])
+        unique_df['beer restaurant'] = rank_costs(unique_df['beer restaurant'])
+        unique_df['coffee'] = rank_costs(unique_df['coffee'])
+        unique_df['milk'] = rank_costs(unique_df['milk'])
+        unique_df['rice'] = rank_costs(unique_df['rice'])
+        unique_df['potato'] = rank_costs(unique_df['potato'])
+        unique_df['water'] = rank_costs(unique_df['water'])
+        unique_df['cigarettes'] = rank_costs(unique_df['cigarettes'])
+        unique_df['ticket'] = rank_costs(unique_df['ticket'])
+        unique_df['rent'] = rank_costs(unique_df['rent'])
+        
+        
+        unique_df = get_city_rank(unique_df)          
+        
             
         
 
@@ -190,6 +287,7 @@ class Command(BaseCommand):
                     "latitude": row["latitude"],
                     "group": row["group"],
                     "propername": row["cityproper"],
+                    "rank": row["rank"],
                     "country": country,
                 },
             )
@@ -197,12 +295,13 @@ class Command(BaseCommand):
             # loop through each column in the row
             for col in unique_df.columns:
                 # check if the column is a data column
-                if col not in ["currency", "city", "country", "longitude", "latitude", "group", "cityproper"]:
+                if col not in ["currency", "city", "country", "longitude", "latitude", "group", "cityproper", "costofLivingIndex", "rentIndex", "CostOfLivingPlusRentIndex", 'rank']:
                     # create the Data model
                     Data.objects.create(
                         name=col,
                         description=row[col][0],
                         value=row[col][1],
+                        rank = row[col][2],
                         currency=row["currency"],
                         city=city,
                         

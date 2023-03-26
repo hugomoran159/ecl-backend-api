@@ -16,6 +16,7 @@ class City(models.Model):
     country = models.ForeignKey(Country, related_name="citylocation", on_delete=models.CASCADE)
     group = models.CharField(max_length=50)
     propername = models.CharField(max_length=200)
+    rank = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
@@ -25,6 +26,7 @@ class Data(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=200)
     value = models.CharField(max_length=50)
+    rank = models.CharField(max_length=50)
     currency = models.CharField(max_length=50)
     city = models.ForeignKey(City, related_name="data", on_delete=models.CASCADE)
 
