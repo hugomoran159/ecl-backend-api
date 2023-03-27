@@ -228,7 +228,7 @@ class Command(BaseCommand):
             ticketval = df['ticket'].apply(lambda x: x[2]).astype(int)
             rentval = df['rent'].apply(lambda x: x[2]).astype(int)
             
-            unique_df['rank'] = mealval + mcmealval + beerval + coffeval + ((milkval + riceval + potatoval)/3) + waterval + cigarettesval + ticketval + rentval
+            unique_df['rank'] = mealval + mcmealval + beerval + coffeval + ((milkval + riceval + potatoval)/3) + cigarettesval + ticketval + rentval
             
             unique_df['rank'] = unique_df['rank'].rank(method='dense', ascending=True)
             
