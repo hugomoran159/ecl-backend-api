@@ -232,6 +232,8 @@ class Command(BaseCommand):
             
             unique_df['rank'] = unique_df['rank'].rank(method='dense', ascending=True)
             
+            unique_df['rank'] = unique_df['rank'].astype(int)
+            
             print(unique_df['rank'])
             
             
