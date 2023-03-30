@@ -191,8 +191,6 @@ class Command(BaseCommand):
             
             df = pd.DataFrame()
             
-            
-            
             df['description_column'] = col.apply(lambda x: x[0])
             
             df['value_column'] = col.apply(lambda x: x[1])

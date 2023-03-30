@@ -28,8 +28,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['https://eclbackend.herokuapp.com/', 'https://*.127.0.0.1']
 
@@ -132,13 +133,10 @@ WSGI_APPLICATION = "backend.wsgi.application"
 
 DATABASES = {
 
-    
      'default': dj_database_url.config(
         conn_max_age=600,
         conn_health_checks=True,
-    ) 
-    
-    
+    )
 }
 
 '''
@@ -154,6 +152,8 @@ DATABASES = {
        'PORT': '5432',
    }
     },
+    
+    
     
    
     
